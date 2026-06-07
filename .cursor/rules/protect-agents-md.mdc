@@ -1,0 +1,11 @@
+---
+description: Do not modify AGENTS.md unless explicitly requested
+globs: AGENTS.md
+alwaysApply: true
+---
+
+Never edit, overwrite, or auto-update `AGENTS.md` unless the user explicitly asks to change that file.
+
+Treat the current `AGENTS.md` as the source of truth for project agent instructions. Do not patch it when linking InsForge, running CLI setup, or completing features.
+
+If backend project details change, update `.insforge/project.json`, `.env.example`, or `insforge.toml` instead — not `AGENTS.md`.
