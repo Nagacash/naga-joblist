@@ -7,6 +7,7 @@ type PostHogEventInput =
         userId: string;
         jobTitle: string;
         location: string;
+        country: string;
       };
     }
   | {
