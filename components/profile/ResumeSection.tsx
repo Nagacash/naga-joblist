@@ -23,8 +23,28 @@ export function ResumeSection({ existingResumeUrl, onExtracted }: Props) {
   const [generateError, setGenerateError] = useState<string | null>(null);
   const [generateSuccess, setGenerateSuccess] = useState(false);
   const [isGenerating, startGenerateTransition] = useTransition();
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const hasResume = !!(existingResumeUrl || fileName);
+
+  async function downloadResumeFile(): Promise<boolean> {
+    const res = await fetch("/api/resume/download");
+    if (!res.ok) {
+      return false;
+    }
+
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = "resume.pdf";
+    anchor.rel = "noopener";
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    URL.revokeObjectURL(url);
+    return true;
+  }
 
   function handleExtract() {
     setExtractError(null);
@@ -48,8 +68,14 @@ export function ResumeSection({ existingResumeUrl, onExtracted }: Props) {
         const res = await fetch("/api/resume/generate", { method: "POST" });
         const json = (await res.json()) as { success: boolean; error?: string };
         if (json.success) {
-          setGenerateSuccess(true);
-          window.open("/api/resume/download", "_blank");
+          const downloaded = await downloadResumeFile();
+          if (downloaded) {
+            setGenerateSuccess(true);
+          } else {
+            setGenerateError(
+              "Resume saved, but the download could not start. Use View current resume below.",
+            );
+          }
         } else {
           setGenerateError(json.error ?? "Generation failed");
         }
@@ -152,14 +178,22 @@ export function ResumeSection({ existingResumeUrl, onExtracted }: Props) {
             {isPending ? "Uploading..." : fileName}
           </p>
         ) : showExistingLink ? (
-          <a
-            href="/api/resume/download"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-medium text-accent hover:underline"
+          <button
+            type="button"
+            disabled={isDownloading}
+            onClick={async () => {
+              setIsDownloading(true);
+              setUploadError(null);
+              const ok = await downloadResumeFile();
+              if (!ok) {
+                setUploadError("Could not download resume. Please try again.");
+              }
+              setIsDownloading(false);
+            }}
+            className="text-sm font-medium text-accent hover:underline disabled:opacity-60"
           >
-            View current resume
-          </a>
+            {isDownloading ? "Downloading..." : "Download current resume"}
+          </button>
         ) : (
           <>
             <p className="text-sm font-medium text-text-primary">
@@ -283,7 +317,9 @@ export function ResumeSection({ existingResumeUrl, onExtracted }: Props) {
           <p className="text-sm text-error">{generateError}</p>
         )}
         {generateSuccess && (
-          <p className="text-sm text-success">Resume generated and downloaded.</p>
+          <p className="text-sm text-success">
+            Resume generated. Check your downloads folder for resume.pdf.
+          </p>
         )}
       </div>
     </section>

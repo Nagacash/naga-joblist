@@ -40,7 +40,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": 'inline; filename="resume.pdf"',
+        "Content-Disposition": 'attachment; filename="resume.pdf"',
       },
     });
   } catch (error) {
