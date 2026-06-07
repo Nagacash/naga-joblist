@@ -13,7 +13,7 @@ export const SITE_URL =
 
 export const SITE_NAME = "Naga Codex — Job Pilot";
 export const DEFAULT_TITLE =
-  "Naga Codex Job Pilot | AI Job Search by Maurice Holda";
+  "Naga Codex Job Pilot | AI Job Search by Naga Codex";
 export const DEFAULT_DESCRIPTION = `${PRODUCT_NAME} by ${CONTACT_NAME} under ${OPERATOR_NAME}. AI-powered job matching, company research, and application tracking for developers in Germany, the United Kingdom, and Europe.`;
 
 export const SEO_KEYWORDS = [
