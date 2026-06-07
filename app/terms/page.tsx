@@ -11,12 +11,13 @@ import {
   PRODUCT_NAME,
   TERMS_LAST_UPDATED,
 } from "@/lib/legal";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Terms & Conditions",
-  description:
-    "Terms and conditions for using Naga Codex Job Pilot.",
-};
+  description: `Terms and conditions for ${PRODUCT_NAME}, operated by ${OPERATOR_NAME} and ${CONTACT_NAME}.`,
+  path: "/terms",
+});
 
 const legalLinkClassName =
   "font-medium text-accent transition-opacity hover:opacity-80";

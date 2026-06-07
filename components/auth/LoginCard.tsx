@@ -8,10 +8,16 @@ const errorMessages: Record<string, string> = {
 
 type Props = {
   error?: string;
+  callback?: string;
 };
 
-export function LoginCard({ error }: Props) {
-  const message = error ? errorMessages[error] : null;
+export function LoginCard({ error, callback }: Props) {
+  const message =
+    error === "redirect" && callback
+      ? `This site URL is not allowed for sign-in yet. Add ${callback} to Allowed redirect URLs in your InsForge project authentication settings.`
+      : error
+        ? errorMessages[error]
+        : null;
 
   return (
     <section className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-[1440px] items-center justify-center px-4 py-12 sm:px-6 lg:px-8">

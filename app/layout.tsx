@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import { RouteProgress } from "@/components/layout/RouteProgress";
+import { GlobalJsonLd } from "@/components/seo/GlobalJsonLd";
+import { rootMetadata } from "@/lib/seo";
 
 import "./globals.css";
 
@@ -13,12 +15,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: "Naga Codex — Job Pilot",
-    template: "%s · Naga Codex — Job Pilot",
-  },
-  description:
-    "AI-powered job search assistance for matching roles, tailored resumes, and faster applications.",
+  ...rootMetadata,
   icons: {
     icon: [{ url: "/favicon.ico", sizes: "any" }],
     shortcut: "/favicon.ico",
@@ -32,8 +29,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased`}>
+    <html lang="en-GB" className={`${inter.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col bg-background">
+        <GlobalJsonLd />
         <RouteProgress />
         {children}
       </body>

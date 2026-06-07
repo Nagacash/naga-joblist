@@ -40,7 +40,15 @@ export async function GET(
 
     if (error || !data.url || !data.codeVerifier) {
       console.error("[auth/oauth]", error);
-      loginUrl.searchParams.set("error", "oauth");
+      const redirectNotAllowed =
+        error &&
+        typeof error === "object" &&
+        "nextActions" in error &&
+        String(error.nextActions).toLowerCase().includes("redirect");
+      loginUrl.searchParams.set("error", redirectNotAllowed ? "redirect" : "oauth");
+      if (redirectNotAllowed) {
+        loginUrl.searchParams.set("callback", callbackUrl.toString());
+      }
       return NextResponse.redirect(loginUrl);
     }
 

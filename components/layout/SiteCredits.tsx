@@ -1,4 +1,4 @@
-import { CONTACT_LINKEDIN } from "@/lib/legal";
+import { CONTACT_LINKEDIN, CONTACT_NAME, OPERATOR_NAME } from "@/lib/legal";
 
 const ADZUNA_HOME = "https://www.adzuna.com";
 const NAGA_APPAREL_INSTAGRAM = "https://www.instagram.com/naga_apparel/";
@@ -48,7 +48,7 @@ export function SiteCredits({ includeAdzuna = true }: SiteCreditsProps) {
       </a>
       <span> (insta: naga_apparel)</span>
       <span className="mx-1.5 text-text-muted">·</span>
-      <span>Design by </span>
+      <span>Built by </span>
       <a
         href={CONTACT_LINKEDIN}
         target="_blank"
@@ -56,7 +56,16 @@ export function SiteCredits({ includeAdzuna = true }: SiteCreditsProps) {
         className={linkClassName}
         translate="no"
       >
-        Naga Codex
+        {OPERATOR_NAME}
+      </a>
+      <span> · </span>
+      <a
+        href={CONTACT_LINKEDIN}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={linkClassName}
+      >
+        {CONTACT_NAME}
       </a>
     </p>
   );

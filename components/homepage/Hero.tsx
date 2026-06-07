@@ -28,8 +28,9 @@ export function Hero() {
               delay={100}
               className="landing-lead mx-auto mt-6 max-w-2xl text-base leading-7 text-text-secondary sm:text-lg"
             >
-              Find better job matches, tailor your resume for every role, and
-              keep everything organized in one place.
+              Naga Codex Job Pilot by Maurice Holda — find better job matches,
+              tailor your resume for every role, and keep everything organized
+              in one place.
             </RevealText>
             <RevealText
               immediate

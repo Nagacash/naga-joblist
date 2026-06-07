@@ -9,16 +9,24 @@ function getPostHogKey(): string | undefined {
   );
 }
 
+function getPostHogUiHost(): string {
+  const host = process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com";
+  return host.includes("eu")
+    ? "https://eu.posthog.com"
+    : "https://us.posthog.com";
+}
+
 export function initPostHog(): void {
   const key = getPostHogKey();
-  const host = process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com";
 
   if (!key || typeof window === "undefined") {
     return;
   }
 
+  // Same-origin proxy via next.config rewrites — avoids ad-blocker "Failed to fetch".
   posthog.init(key, {
-    api_host: host,
+    api_host: "/ingest",
+    ui_host: getPostHogUiHost(),
     capture_pageview: true,
     capture_exceptions: true,
     debug: process.env.NODE_ENV === "development",

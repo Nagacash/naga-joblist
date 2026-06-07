@@ -11,12 +11,13 @@ import {
   PRIVACY_LAST_UPDATED,
   PRODUCT_NAME,
 } from "@/lib/legal";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Privacy Policy",
-  description:
-    "How Naga Codex Job Pilot collects, uses, and protects your personal information.",
-};
+  description: `Privacy Policy for ${PRODUCT_NAME} by ${CONTACT_NAME} and ${OPERATOR_NAME}. How we collect, use, and protect your data.`,
+  path: "/privacy",
+});
 
 const legalLinkClassName =
   "font-medium text-accent transition-opacity hover:opacity-80";
