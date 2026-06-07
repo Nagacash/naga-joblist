@@ -8,7 +8,7 @@ export function SuccessStory() {
       <div className="landing-panel landing-hero-glow mx-auto max-w-[1440px] px-6 py-16 text-center sm:px-10 sm:py-20 lg:px-16 lg:py-24">
         <RevealText delay={0}>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">
-            Success Stories
+            From the field
           </p>
         </RevealText>
 
@@ -17,9 +17,9 @@ export function SuccessStory() {
           delay={100}
           className="landing-display mx-auto mt-8 max-w-4xl text-[clamp(2rem,4.1vw,3.2rem)] font-medium leading-[1.18] tracking-[-0.04em] text-text-slate"
         >
-          &ldquo;I used to spend my evenings copy-pasting resumes. Now I open my
-          dashboard to see interviews waiting. It feels like cheating. Had 3
-          offers on the table simultaneously.&rdquo;
+          &ldquo;I used to burn evenings reformatting the same resume. Now I log
+          in and interviews are already lined up. It almost feels unfair. I
+          ended up with three offers at once.&rdquo;
         </RevealText>
 
         <RevealText

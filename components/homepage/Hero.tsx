@@ -18,9 +18,9 @@ export function Hero() {
               delay={0}
               className="landing-display text-[clamp(2.75rem,7vw,4.625rem)] font-semibold leading-[0.94] tracking-[-0.045em] text-text-slate"
             >
-              Job hunting is hard.
+              Searching for work is exhausting.
               <br />
-              Your tools shouldn&apos;t be.
+              Your setup doesn&apos;t have to be.
             </RevealText>
             <RevealText
               as="p"
@@ -28,9 +28,9 @@ export function Hero() {
               delay={100}
               className="landing-lead mx-auto mt-6 max-w-2xl text-base leading-7 text-text-secondary sm:text-lg"
             >
-              Naga Codex Job Pilot by Maurice Holda — find better job matches,
-              tailor your resume for every role, and keep everything organized
-              in one place.
+              Naga Codex Job Pilot by Maurice Holda brings sharper role
+              matching, resume tailoring, and one workspace for every
+              application you care about.
             </RevealText>
             <RevealText
               immediate
@@ -38,13 +38,13 @@ export function Hero() {
               className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row"
             >
               <Link href="/login" className="landing-button-primary">
-                Get Started
+                Create free account
                 <span className="ml-2 text-xs" aria-hidden="true">
                   {">"}
                 </span>
               </Link>
               <Link href="/login" className="landing-button-secondary">
-                Find Your First Match
+                See your first match
               </Link>
             </RevealText>
           </div>
@@ -61,7 +61,7 @@ export function Hero() {
               </div>
             </LandingMediaFrame>
             <figcaption className="sr-only">
-              Product preview of the Naga Codex Job Pilot dashboard
+              Preview of the Naga Codex Job Pilot workspace
             </figcaption>
           </RevealText>
 

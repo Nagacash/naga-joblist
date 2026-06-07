@@ -240,23 +240,66 @@ body {
   contain-intrinsic-size: auto 720px;
 }
 
+/* Landing-only dark navy theme — scoped via .landing-shell (homepage wrapper) */
+.landing-shell {
+  --landing-bg: #0a0f1a;
+  --landing-surface: #111827;
+  --landing-surface-raised: #151d2e;
+  --landing-border: #1e293b;
+  --landing-text-primary: #f1f5f9;
+  --landing-text-secondary: #94a3b8;
+  --landing-text-muted: #64748b;
+  --landing-text-slate: #e2e8f0;
+  --landing-text-dark: #cbd5e1;
+  --landing-text-darkest: #f8fafc;
+
+  --color-background: var(--landing-bg);
+  --color-surface: var(--landing-surface);
+  --color-surface-secondary: var(--landing-surface-raised);
+  --color-surface-tertiary: var(--landing-surface-raised);
+  --color-surface-muted: var(--landing-surface);
+  --color-border: var(--landing-border);
+  --color-text-primary: var(--landing-text-primary);
+  --color-text-secondary: var(--landing-text-secondary);
+  --color-text-muted: var(--landing-text-muted);
+  --color-text-dark: var(--landing-text-dark);
+  --color-text-darkest: var(--landing-text-darkest);
+  --color-text-slate: var(--landing-text-slate);
+  --color-text-slate-medium: var(--landing-text-secondary);
+
+  color-scheme: dark;
+  background-color: var(--landing-bg);
+  color: var(--landing-text-primary);
+}
+
+.landing-shell ::selection {
+  background: color-mix(in srgb, var(--color-accent) 38%, var(--landing-surface));
+  color: var(--landing-text-primary);
+}
+
+.landing-shell .glass-nav {
+  border-bottom-color: color-mix(in srgb, var(--landing-border) 80%, transparent);
+  background: color-mix(in srgb, var(--landing-bg) 72%, transparent);
+  box-shadow: 0 4px 28px color-mix(in srgb, var(--color-overlay-dark) 35%, transparent);
+}
+
 .landing-page {
   position: relative;
-  background-color: var(--color-background);
+  background-color: var(--landing-bg);
   background-image:
     radial-gradient(
       circle at 8% 4%,
-      color-mix(in srgb, var(--color-accent-light) 42%, transparent) 0%,
+      color-mix(in srgb, var(--color-accent) 18%, transparent) 0%,
       transparent 38%
     ),
     radial-gradient(
       circle at 94% 6%,
-      color-mix(in srgb, var(--color-surface-secondary) 70%, transparent) 0%,
+      color-mix(in srgb, var(--color-info) 10%, transparent) 0%,
       transparent 34%
     ),
     radial-gradient(
       circle at 50% 100%,
-      color-mix(in srgb, var(--color-accent-muted) 36%, transparent) 0%,
+      color-mix(in srgb, var(--color-accent) 12%, transparent) 0%,
       transparent 40%
     );
 }
@@ -274,6 +317,12 @@ body {
   font-weight: 500;
   color: var(--color-text-primary);
   box-shadow: var(--shadow-card);
+}
+
+.landing-shell .landing-skip-link {
+  border-color: var(--landing-border);
+  background: var(--landing-surface);
+  color: var(--landing-text-primary);
 }
 
 .landing-skip-link:focus-visible {
@@ -346,43 +395,43 @@ body {
   background-size: 156px 156px;
 }
 
-.landing-hero-glow {
-  background-color: var(--color-surface);
+.landing-shell .landing-hero-glow {
+  background-color: var(--landing-surface);
   background-image:
     radial-gradient(
       circle at 18% 20%,
-      color-mix(in srgb, var(--color-accent-light) 92%, transparent) 0%,
+      color-mix(in srgb, var(--color-accent) 22%, transparent) 0%,
       transparent 26%
     ),
     radial-gradient(
       circle at 50% 58%,
-      color-mix(in srgb, var(--color-accent-muted) 96%, transparent) 0%,
+      color-mix(in srgb, var(--color-info) 14%, transparent) 0%,
       transparent 30%
     ),
     radial-gradient(
       circle at 82% 16%,
-      color-mix(in srgb, var(--color-surface-secondary) 96%, transparent) 0%,
+      color-mix(in srgb, var(--color-accent) 12%, transparent) 0%,
       transparent 24%
     ),
     radial-gradient(
       circle at 90% 82%,
-      color-mix(in srgb, var(--color-accent-light) 70%, transparent) 0%,
+      color-mix(in srgb, var(--color-accent) 16%, transparent) 0%,
       transparent 26%
     ),
     radial-gradient(
       circle at 32% 88%,
-      color-mix(in srgb, var(--color-accent-muted) 92%, transparent) 0%,
+      color-mix(in srgb, var(--color-info) 10%, transparent) 0%,
       transparent 26%
     );
 }
 
-.landing-divider {
+.landing-shell .landing-divider {
   background-image: repeating-linear-gradient(
     -45deg,
-    var(--color-surface) 0,
-    var(--color-surface) 4px,
-    var(--color-surface-secondary) 4px,
-    var(--color-surface-secondary) 8px
+    var(--landing-surface) 0,
+    var(--landing-surface) 4px,
+    var(--landing-surface-raised) 4px,
+    var(--landing-surface-raised) 8px
   );
 }
 
@@ -390,30 +439,30 @@ body {
   box-shadow: var(--shadow-card);
 }
 
-.landing-browser-frame {
-  border: 1px solid color-mix(in srgb, var(--color-surface) 25%, var(--color-border));
-  background: color-mix(in srgb, var(--color-surface) 65%, transparent);
+.landing-shell .landing-browser-frame {
+  border: 1px solid color-mix(in srgb, var(--landing-border) 85%, var(--landing-text-secondary) 15%);
+  background: color-mix(in srgb, var(--landing-surface-raised) 88%, transparent);
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
 }
 
-.landing-browser-shadow {
+.landing-shell .landing-browser-shadow {
   box-shadow:
-    0 1px 3px color-mix(in srgb, var(--color-overlay) 10%, transparent),
-    0 1px 2px -1px color-mix(in srgb, var(--color-overlay) 10%, transparent),
-    0 34px 60px color-mix(in srgb, var(--color-overlay) 22%, transparent);
+    0 1px 3px color-mix(in srgb, var(--color-overlay-dark) 45%, transparent),
+    0 1px 2px -1px color-mix(in srgb, var(--color-overlay-dark) 35%, transparent),
+    0 34px 60px color-mix(in srgb, var(--color-overlay-dark) 55%, transparent);
 }
 
 /* Hero product clip — crops watermark edges, keeps subject centered-left */
-.landing-hero-video-stage {
+.landing-shell .landing-hero-video-stage {
   position: relative;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  background: var(--color-surface-tertiary);
+  background: var(--landing-surface-raised);
   transform: translateZ(0);
 }
 
-.landing-hero-video-stage::before {
+.landing-shell .landing-hero-video-stage::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -424,26 +473,26 @@ body {
       to right,
       transparent 0%,
       transparent 72%,
-      color-mix(in srgb, var(--color-surface-tertiary) 92%, var(--color-overlay) 8%) 100%
+      color-mix(in srgb, var(--landing-surface-raised) 88%, var(--landing-bg) 12%) 100%
     ),
     linear-gradient(
       to bottom,
-      color-mix(in srgb, var(--color-surface-tertiary) 88%, var(--color-overlay) 12%) 0%,
+      color-mix(in srgb, var(--landing-surface-raised) 82%, var(--landing-bg) 18%) 0%,
       transparent 8%,
       transparent 92%,
-      color-mix(in srgb, var(--color-surface-tertiary) 88%, var(--color-overlay) 12%) 100%
+      color-mix(in srgb, var(--landing-surface-raised) 82%, var(--landing-bg) 18%) 100%
     );
 }
 
-.landing-hero-video-stage::after {
+.landing-shell .landing-hero-video-stage::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 2;
   pointer-events: none;
   box-shadow:
-    inset 0 1px 0 color-mix(in srgb, var(--color-surface) 28%, transparent),
-    inset 0 0 0 1px color-mix(in srgb, var(--color-surface) 12%, transparent);
+    inset 0 1px 0 color-mix(in srgb, var(--landing-text-secondary) 12%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--landing-border) 65%, transparent);
 }
 
 .landing-hero-video {
@@ -462,16 +511,16 @@ body {
   }
 }
 
-.landing-video-chrome {
-  border-bottom: 1px solid color-mix(in srgb, var(--color-border) 80%, var(--color-surface) 20%);
-  background: color-mix(in srgb, var(--color-surface-secondary) 88%, var(--color-surface) 12%);
+.landing-shell .landing-video-chrome {
+  border-bottom: 1px solid color-mix(in srgb, var(--landing-border) 90%, transparent);
+  background: color-mix(in srgb, var(--landing-surface) 92%, var(--landing-bg) 8%);
 }
 
-.landing-video-chrome-dot {
+.landing-shell .landing-video-chrome-dot {
   height: 0.625rem;
   width: 0.625rem;
   border-radius: var(--radius-full);
-  background: color-mix(in srgb, var(--color-border) 70%, var(--color-text-muted) 30%);
+  background: color-mix(in srgb, var(--landing-border) 55%, var(--landing-text-muted) 45%);
 }
 
 .landing-button-primary,
@@ -495,31 +544,29 @@ body {
     box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.landing-button-primary {
-  border: 1px solid color-mix(in srgb, var(--color-overlay) 86%, var(--color-accent) 14%);
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--color-text-darker) 84%, var(--color-overlay-dark) 16%) 0%,
-      color-mix(in srgb, var(--color-overlay-dark) 92%, var(--color-overlay) 8%) 100%
-    );
+.landing-shell .landing-button-primary {
+  border: 1px solid var(--color-accent-dark);
+  background: linear-gradient(
+    180deg,
+    var(--color-accent) 0%,
+    var(--color-accent-dark) 100%
+  );
   color: var(--color-accent-foreground);
   box-shadow:
-    0 10px 20px color-mix(in srgb, var(--color-overlay) 10%, transparent),
-    inset 0 1px 0 color-mix(in srgb, var(--color-surface) 18%, transparent);
+    0 10px 24px color-mix(in srgb, var(--color-accent) 28%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--color-accent-foreground) 22%, transparent);
 }
 
-.landing-button-primary:hover {
+.landing-shell .landing-button-primary:hover {
   transform: translateY(-2px);
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--color-text-black) 82%, var(--color-accent) 18%) 0%,
-      color-mix(in srgb, var(--color-overlay-dark) 82%, var(--color-accent) 18%) 100%
-    );
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-accent) 88%, white 12%) 0%,
+    var(--color-accent-dark) 100%
+  );
   box-shadow:
-    0 14px 28px color-mix(in srgb, var(--color-overlay) 16%, transparent),
-    inset 0 1px 0 color-mix(in srgb, var(--color-surface) 20%, transparent);
+    0 14px 32px color-mix(in srgb, var(--color-accent) 36%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--color-accent-foreground) 24%, transparent);
 }
 
 .landing-button-primary:active {
@@ -532,18 +579,18 @@ body {
   outline-offset: 2px;
 }
 
-.landing-button-secondary {
-  border: 1px solid var(--color-border);
-  background: color-mix(in srgb, var(--color-surface) 92%, var(--color-surface-secondary) 8%);
-  color: var(--color-text-primary);
+.landing-shell .landing-button-secondary {
+  border: 1px solid color-mix(in srgb, var(--landing-border) 75%, var(--landing-text-secondary) 25%);
+  background: color-mix(in srgb, var(--landing-surface) 55%, transparent);
+  color: var(--landing-text-primary);
   box-shadow:
-    0 1px 2px color-mix(in srgb, var(--color-overlay) 5%, transparent),
-    inset 0 1px 0 color-mix(in srgb, var(--color-surface) 88%, transparent);
+    0 1px 2px color-mix(in srgb, var(--color-overlay-dark) 25%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--landing-text-secondary) 8%, transparent);
 }
 
-.landing-button-secondary:hover {
-  background: var(--color-surface-secondary);
-  border-color: color-mix(in srgb, var(--color-border) 70%, var(--color-accent-light) 30%);
+.landing-shell .landing-button-secondary:hover {
+  background: color-mix(in srgb, var(--landing-surface-raised) 75%, transparent);
+  border-color: color-mix(in srgb, var(--landing-border) 50%, var(--color-accent) 50%);
 }
 
 .landing-button-secondary:active {
@@ -638,5 +685,13 @@ select {
   .glass-nav,
   .glass-field {
     background: var(--color-surface);
+  }
+
+  .landing-shell .glass-nav {
+    background: var(--landing-surface);
+  }
+
+  .landing-shell .landing-browser-frame {
+    background: var(--landing-surface-raised);
   }
 }

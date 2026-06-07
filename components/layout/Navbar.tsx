@@ -59,7 +59,7 @@ export function Navbar({ isAuthenticated = false }: Props) {
           </div>
         ) : (
           <Link href="/login" className="landing-button-primary min-h-10 px-4">
-            Start for free
+            Try it free
           </Link>
         )}
       </div>

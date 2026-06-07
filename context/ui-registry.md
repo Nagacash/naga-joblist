@@ -55,15 +55,31 @@ Last updated: 2026-06-07
 **Pattern notes:**
 Auth screens use a two-panel shell: a left explanatory panel with the established landing glow treatment and a right focused action panel. Provider actions are token-driven bordered form buttons with lucide icons and no hardcoded provider colors.
 
+### Landing Shell (dark navy)
+
+File: `app/page.tsx`, `app/globals.css`
+Last updated: 2026-06-07
+
+| Property    | Class / pattern                                                                 |
+| ----------- | ------------------------------------------------------------------------------- |
+| Wrapper     | `landing-shell flex min-h-full flex-col` on homepage root                       |
+| Footer slot | `landing-page-footer` inside shell (inherits dark tokens)                       |
+| Tokens      | `--landing-*` vars remap global `--color-*` inside `.landing-shell` only        |
+| Nav         | `.landing-shell .glass-nav` — dark frosted sticky header                        |
+| CTAs        | `.landing-shell .landing-button-primary` — gold gradient on dark               |
+
+**Pattern notes:**
+Homepage only. Login, dashboard, and app routes are unchanged (light `app-ambient`).
+
 ### Landing Navbar
 
 File: components/layout/Navbar.tsx
-Last updated: 2026-06-03
+Last updated: 2026-06-07
 
 | Property         | Class                                                                                                    |
 | ---------------- | -------------------------------------------------------------------------------------------------------- |
-| Background       | `bg-surface`                                                                                             |
-| Border           | `border-b border-border`                                                                                 |
+| Background       | `glass-nav` (dark frosted when inside `landing-shell`)                                                   |
+| Border           | `border-b` via `glass-nav`                                                                               |
 | Border radius    | `rounded-md` on CTA only                                                                                 |
 | Text — primary   | `text-sm font-medium text-text-dark`                                                                     |
 | Text — secondary | `landing-button-primary` on CTA                                                                         |
@@ -103,7 +119,7 @@ Last updated: 2026-06-07
 ### Landing Hero
 
 File: components/homepage/Hero.tsx
-Last updated: 2026-06-07
+Last updated: 2026-06-07 (dark navy shell)
 
 | Property         | Class                                                                                                          |
 | ---------------- | -------------------------------------------------------------------------------------------------------------- |
@@ -119,7 +135,7 @@ Last updated: 2026-06-07
 | Video crop       | `scale(1.2)`, `object-position: 36%`, light vignette; reduced motion uses `scale(1.12)`                        |
 
 **Pattern notes:**
-Single glow panel stacks headline, CTAs, then `HeroVideo` inside `LandingMediaFrame`. Page uses `landing-skip-link` + `#main-content` with `scroll-margin-top`.
+Single glow panel stacks headline, CTAs, then `HeroVideo` inside `LandingMediaFrame`. Page uses `landing-skip-link` + `#main-content` with `scroll-margin-top`. Hero glows use gold/info radial spots on `--landing-surface`, not cream pastels.
 
 ### Split Feature Panel
 
@@ -204,12 +220,12 @@ Client component with 3 button states: Connect (no context) → "I'm Connected" 
 ### Landing Buttons
 
 File: app/globals.css
-Last updated: 2026-06-03
+Last updated: 2026-06-07
 
 | Property         | Class                                                                                         |
 | ---------------- | --------------------------------------------------------------------------------------------- |
-| Background       | `landing-button-primary` uses a dark token-based gradient, `landing-button-secondary` uses a soft surface fill |
-| Border           | `landing-button-primary` has a dark mixed border, `landing-button-secondary` uses `var(--color-border)` |
+| Background       | On dark shell: primary = gold gradient (`--color-accent` → `--color-accent-dark`); secondary = translucent `--landing-surface` |
+| Border           | Primary: `--color-accent-dark`; secondary: mixed `--landing-border` / `--landing-text-secondary` |
 | Border radius    | `var(--radius-md)`                                                                            |
 | Text — primary   | `landing-button-primary` sets `color: var(--color-accent-foreground)`                        |
 | Text — secondary | `landing-button-secondary` sets `color: var(--color-text-primary)`                           |
@@ -219,7 +235,7 @@ Last updated: 2026-06-03
 | Accent usage     | Focus ring uses `var(--color-accent)`                                                        |
 
 **Pattern notes:**
-All landing-page CTAs should use these shared semantic classes instead of duplicating button styling inline. This keeps contrast and polish consistent across navbar, hero, and footer CTA areas.
+All landing-page CTAs should use these shared semantic classes instead of duplicating button styling inline. Dark-shell overrides live under `.landing-shell` in `globals.css`; login page buttons keep the legacy light treatment until matched separately.
 
 ### Legal Pages
 

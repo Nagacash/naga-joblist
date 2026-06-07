@@ -22,12 +22,12 @@ const dividerClassName =
 
 export default function HomePage() {
   return (
-    <>
+    <div className="landing-shell flex min-h-full flex-col">
       <a href="#main-content" className="landing-skip-link">
         Skip to content
       </a>
       <Navbar />
-      <main id="main-content" className="landing-page pb-0">
+      <main id="main-content" className="landing-page flex-1 pb-0">
         <Hero />
         <HowItWorks />
         <div className="px-4 sm:px-6 lg:px-8">
@@ -43,9 +43,9 @@ export default function HomePage() {
         </div>
         <CTASection />
       </main>
-      <div className="px-4 sm:px-6 lg:px-8">
+      <div className="landing-page-footer px-4 sm:px-6 lg:px-8">
         <Footer />
       </div>
-    </>
+    </div>
   );
 }

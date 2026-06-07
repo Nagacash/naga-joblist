@@ -12,26 +12,26 @@ export function CTASection() {
             delay={0}
             className="landing-display text-[clamp(2.5rem,6vw,4.5rem)] font-semibold leading-[0.96] tracking-[-0.045em] text-text-slate"
           >
-            Your next job search can feel a lot less overwhelming
+            A calmer way to move your career forward
           </RevealText>
           <RevealText
             as="p"
             delay={100}
             className="landing-lead mx-auto mt-6 max-w-2xl text-base leading-7 text-text-secondary sm:text-lg"
           >
-            Set up your profile, upload your resume, and start finding matches
-            in minutes.
+            Add your profile, upload a resume, and let matching begin in just a
+            few minutes.
           </RevealText>
           <RevealText
             delay={200}
             className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row"
           >
             <Link href="/login" className="landing-button-primary">
-              Get Started
+              Create free account
               <span className="ml-2 text-xs">{">"}</span>
             </Link>
             <Link href="/login" className="landing-button-secondary">
-              Find Your First Match
+              See your first match
             </Link>
           </RevealText>
         </div>

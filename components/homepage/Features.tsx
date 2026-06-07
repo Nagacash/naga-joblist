@@ -5,19 +5,19 @@ import { RevealText } from "@/components/homepage/RevealText";
 
 const featureItems = [
   {
-    title: "Understand your match score",
+    title: "Know your fit before you apply",
     description:
-      "See how your profile lines up with each role before you apply. Get a clear breakdown of what fits and what's missing.",
+      "Each listing includes a score and a plain-language read on your strengths, gaps, and where you stand.",
   },
   {
-    title: "Generate cover letters quickly",
+    title: "Draft cover letters on demand",
     description:
-      "Write letters that feel natural and specific to each role, you can edit or regenerate anytime.",
+      "Generate role-specific letters you can edit or rerun until the tone feels right for that company.",
   },
   {
-    title: "Focus on the right roles",
+    title: "Prioritize what deserves your energy",
     description:
-      "Filter out low fit jobs and stay on the ones that actually matter. Spend less time sorting and more time applying.",
+      "Set aside weak matches early and put your effort into openings that align with your skills.",
   },
 ];
 
@@ -30,7 +30,7 @@ export function Features() {
             <LandingMediaFrame>
               <Image
                 src="/images/agnet-log.png"
-                alt="Naga Codex Job Pilot agent log output"
+                alt="Job Pilot agent activity log"
                 width={2144}
                 height={1656}
                 loading="lazy"
@@ -47,7 +47,7 @@ export function Features() {
               delay={0}
               className="landing-display max-w-lg text-[clamp(2.2rem,5vw,3.5rem)] font-semibold leading-[0.96] tracking-[-0.045em] text-text-slate"
             >
-              Apply With More Confidence, Every Time
+              Show up prepared for every application
             </RevealText>
           </div>
 

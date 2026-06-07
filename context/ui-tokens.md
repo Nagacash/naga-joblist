@@ -340,6 +340,29 @@ wordmark: "JobPilot" — 19px / 700 / text-text-darkest, next to emblem
 
 ---
 
+## Landing dark navy theme (homepage only)
+
+Scoped under `.landing-shell` in `app/globals.css`. Does **not** change global `@theme` tokens — dashboard and app pages stay light.
+
+| Token | Value | Role |
+| ----- | ----- | ---- |
+| `--landing-bg` | `#0a0f1a` | Page background |
+| `--landing-surface` | `#111827` | Panels/cards |
+| `--landing-surface-raised` | `#151d2e` | Media columns, browser chrome |
+| `--landing-border` | `#1e293b` | Borders and grid lines |
+| `--landing-text-primary` | `#f1f5f9` | Headlines |
+| `--landing-text-secondary` | `#94a3b8` | Body copy |
+| `--landing-text-muted` | `#64748b` | Muted labels |
+| `--landing-text-slate` | `#e2e8f0` | Display headings |
+| `--landing-text-dark` | `#cbd5e1` | Nav inactive links |
+| `--landing-text-darkest` | `#f8fafc` | Logo wordmark |
+
+`.landing-shell` remaps `--color-background`, `--color-surface`, `--color-text-*`, and `--color-border` to the landing tokens so existing Tailwind utilities work without component edits. Gold accent (`--color-accent`) is unchanged; primary CTAs use a gold gradient on dark.
+
+Wrapper: `app/page.tsx` uses `landing-shell` around navbar, main, and footer.
+
+---
+
 ## Invariants
 
 - Never use hex values directly in components — always use CSS variables via Tailwind tokens

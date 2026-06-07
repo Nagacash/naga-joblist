@@ -5,19 +5,19 @@ import { RevealText } from "@/components/homepage/RevealText";
 
 const workflowItems = [
   {
-    title: "Find jobs that actually fit",
+    title: "Discover roles worth your time",
     description:
-      "Search by title and location or paste a job link. Get matched roles you can quickly scan.",
+      "Search by title and location, or paste a listing link. Review matches built for quick, confident decisions.",
   },
   {
-    title: "Tailor resumes faster",
+    title: "Shape resumes in minutes",
     description:
-      "Create role specific resumes without starting from scratch. Adjust once and generate in seconds.",
+      "Start from your profile, tune for the role once, and generate a polished version when you are ready to move.",
   },
   {
-    title: "Keep track of every application",
+    title: "Never lose track of momentum",
     description:
-      "Keep a clear view of every job you've found, tailored. Your activity and progress all stay in one simple place.",
+      "Every role you save and tailor lives in one timeline, so your next step is always clear.",
   },
 ];
 
@@ -32,7 +32,7 @@ export function HowItWorks() {
               delay={0}
               className="landing-display max-w-md text-[clamp(2.2rem,5vw,3.6rem)] font-semibold leading-[0.96] tracking-[-0.045em] text-text-slate"
             >
-              Manage Your Job Search With Ease
+              Run your search without the chaos
             </RevealText>
           </div>
 
@@ -65,7 +65,7 @@ export function HowItWorks() {
             <LandingMediaFrame>
               <Image
                 src="/images/jobs-lists.png"
-                alt="Job matches list interface"
+                alt="Matched roles list in Job Pilot"
                 width={2364}
                 height={1778}
                 loading="lazy"
