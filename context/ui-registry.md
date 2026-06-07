@@ -55,21 +55,21 @@ Last updated: 2026-06-07
 **Pattern notes:**
 Auth screens use a two-panel shell: a left explanatory panel with the established landing glow treatment and a right focused action panel. Provider actions are token-driven bordered form buttons with lucide icons and no hardcoded provider colors.
 
-### Landing Shell (dark navy)
+### Dark navy theme (site-wide)
 
-File: `app/page.tsx`, `app/globals.css`
+File: `app/layout.tsx`, `app/globals.css`
 Last updated: 2026-06-07
 
 | Property    | Class / pattern                                                                 |
 | ----------- | ------------------------------------------------------------------------------- |
-| Wrapper     | `landing-shell flex min-h-full flex-col` on homepage root                       |
-| Footer slot | `landing-page-footer` inside shell (inherits dark tokens)                       |
-| Tokens      | `--landing-*` vars remap global `--color-*` inside `.landing-shell` only        |
-| Nav         | `.landing-shell .glass-nav` — dark frosted sticky header                        |
-| CTAs        | `.landing-shell .landing-button-primary` — gold gradient on dark               |
+| Root        | `theme-navy` on `<html>` in root layout                                         |
+| App pages   | `app-ambient` on dashboard, profile, find-jobs, login — dark mesh background   |
+| Tokens      | `--landing-*` vars remap global `--color-*` inside `.theme-navy`                |
+| Nav         | `.theme-navy .glass-nav` — dark frosted sticky header on all routes             |
+| CTAs        | `.theme-navy .landing-button-primary` — gold gradient on dark (landing/login)    |
 
 **Pattern notes:**
-Homepage only. Login, dashboard, and app routes are unchanged (light `app-ambient`).
+Single dark theme across landing, app, auth, and legal pages. Glass panels inherit remapped surface tokens automatically.
 
 ### Landing Navbar
 
@@ -78,7 +78,7 @@ Last updated: 2026-06-07
 
 | Property         | Class                                                                                                    |
 | ---------------- | -------------------------------------------------------------------------------------------------------- |
-| Background       | `glass-nav` (dark frosted when inside `landing-shell`)                                                   |
+| Background       | `glass-nav` (dark frosted via `.theme-navy`)                                                               |
 | Border           | `border-b` via `glass-nav`                                                                               |
 | Border radius    | `rounded-md` on CTA only                                                                                 |
 | Text — primary   | `text-sm font-medium text-text-dark`                                                                     |
@@ -235,7 +235,7 @@ Last updated: 2026-06-07
 | Accent usage     | Focus ring uses `var(--color-accent)`                                                        |
 
 **Pattern notes:**
-All landing-page CTAs should use these shared semantic classes instead of duplicating button styling inline. Dark-shell overrides live under `.landing-shell` in `globals.css`; login page buttons keep the legacy light treatment until matched separately.
+All landing-page CTAs should use these shared semantic classes instead of duplicating button styling inline. Dark overrides live under `.theme-navy` in `globals.css`.
 
 ### Legal Pages
 
@@ -382,7 +382,7 @@ Thin client wrapper that owns the `useRef<ProfileFormHandle>` connecting `Resume
 ### Profile Form
 
 File: components/profile/ProfileForm.tsx
-Last updated: 2026-06-03
+Last updated: 2026-06-07
 
 | Property         | Class                                                                                 |
 | ---------------- | ------------------------------------------------------------------------------------- |
@@ -397,7 +397,7 @@ Last updated: 2026-06-03
 | Accent usage     | `focus:ring-1 focus:ring-accent` on all inputs; `bg-accent-light text-accent` skill tags; `bg-accent text-accent-foreground` Save button |
 
 **Pattern notes:**
-Form labels use `text-xs font-medium uppercase tracking-wide` — all caps with letter-spacing, not sentence case. Tag inputs render removable pill chips with `bg-accent-light text-accent`. Work Experience entries are individually bordered sub-cards inside the main form card. Month/Year pickers use two adjacent `<select>` elements. Save Profile button is full-width at the bottom of the card.
+Form labels use `text-xs font-medium uppercase tracking-wide` — all caps with letter-spacing, not sentence case. Tag inputs render removable pill chips with `bg-accent-light text-accent`. Work Experience and Projects entries are individually bordered sub-cards (`rounded-xl border border-border p-4`) inside the main form card. Bio uses `FormTextarea` (`resize-y`, same border/focus ring as inputs). Projects repeat the work-experience add/remove pattern (`+ Add project`, ✕ remove when >1). Month/Year pickers use two adjacent `<select>` elements. Save Profile button is full-width at the bottom of the card.
 
 ---
 

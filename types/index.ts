@@ -9,12 +9,21 @@ export type MissingField =
   | "WORK EXPERIENCE"
   | "EDUCATION";
 
+export interface Project {
+  name: string;
+  description: string;
+  technologies: string[];
+  url: string | null;
+}
+
 export interface Profile {
   id: string;
   full_name: string | null;
   email: string | null;
   phone: string | null;
   location: string | null;
+  bio: string | null;
+  projects: Project[] | null;
   current_title: string | null;
   experience_level: string | null;
   years_experience: number | null;

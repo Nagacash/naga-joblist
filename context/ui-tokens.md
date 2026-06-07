@@ -340,9 +340,9 @@ wordmark: "JobPilot" — 19px / 700 / text-text-darkest, next to emblem
 
 ---
 
-## Landing dark navy theme (homepage only)
+## Dark navy theme (site-wide)
 
-Scoped under `.landing-shell` in `app/globals.css`. Does **not** change global `@theme` tokens — dashboard and app pages stay light.
+Applied on `<html class="theme-navy">` in `app/layout.tsx`. Does **not** change global `@theme` defaults — remaps `--color-*` at runtime for all pages.
 
 | Token | Value | Role |
 | ----- | ----- | ---- |
@@ -357,9 +357,9 @@ Scoped under `.landing-shell` in `app/globals.css`. Does **not** change global `
 | `--landing-text-dark` | `#cbd5e1` | Nav inactive links |
 | `--landing-text-darkest` | `#f8fafc` | Logo wordmark |
 
-`.landing-shell` remaps `--color-background`, `--color-surface`, `--color-text-*`, and `--color-border` to the landing tokens so existing Tailwind utilities work without component edits. Gold accent (`--color-accent`) is unchanged; primary CTAs use a gold gradient on dark.
+`.theme-navy` remaps `--color-background`, `--color-surface`, `--color-text-*`, and `--color-border` to the navy tokens so existing Tailwind utilities work without component edits. Gold accent (`--color-accent`) is unchanged; landing CTAs use a gold gradient on dark.
 
-Wrapper: `app/page.tsx` uses `landing-shell` around navbar, main, and footer.
+`app-ambient` on dashboard, profile, find-jobs, and login uses the same dark mesh gradients as the homepage.
 
 ---
 

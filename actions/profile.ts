@@ -14,7 +14,7 @@ import { requireUser } from "@/lib/auth";
 import { createInsforgeServer } from "@/lib/insforge-server";
 import { trackPostHogEvent } from "@/lib/posthog-server";
 import { calculateCompletion } from "@/lib/profile-utils";
-import type { Education, WorkExperience } from "@/types";
+import type { Education, Project, WorkExperience } from "@/types";
 
 type WorkExperienceEntry = {
   company: string;
@@ -32,10 +32,18 @@ type EducationEntry = {
   graduation_year: string;
 };
 
+type ProjectEntry = {
+  name: string;
+  description: string;
+  technologies: string[];
+  url: string;
+};
+
 type ProfileFormData = {
   fullName: string;
   phone: string;
   location: string;
+  bio: string;
   linkedinUrl: string;
   portfolioUrl: string;
   workAuth: string;
@@ -45,6 +53,7 @@ type ProfileFormData = {
   skills: string[];
   industries: string[];
   workEntries: WorkExperienceEntry[];
+  projectEntries: ProjectEntry[];
   educationEntries: EducationEntry[];
   jobTitlesSeeking: string[];
   remotePreference: string;
@@ -83,6 +92,15 @@ export async function saveProfile(
       responsibilities: e.responsibilities,
     }));
 
+    const projects: Project[] = data.projectEntries
+      .filter((p) => p.name.trim() || p.description.trim())
+      .map((p) => ({
+        name: p.name.trim(),
+        description: p.description.trim(),
+        technologies: p.technologies,
+        url: p.url.trim() || null,
+      }));
+
     const { data: existing } = await insforge.database
       .from("profiles")
       .select("is_complete")
@@ -107,6 +125,8 @@ export async function saveProfile(
         full_name: data.fullName || null,
         phone: data.phone || null,
         location: data.location || null,
+        bio: data.bio.trim() || null,
+        projects,
         linkedin_url: data.linkedinUrl || null,
         portfolio_url: data.portfolioUrl || null,
         work_authorization: data.workAuth || null,
@@ -212,12 +232,14 @@ export type ExtractedProfile = {
   full_name: string | null;
   phone: string | null;
   location: string | null;
+  bio: string | null;
   current_title: string | null;
   experience_level: string | null;
   years_experience: number | null;
   skills: string[];
   industries: string[];
   work_experience: WorkExperience[];
+  projects: Project[];
   education: Education[];
   job_titles_seeking: string[];
   linkedin_url: string | null;
@@ -278,12 +300,14 @@ export async function extractProfile(): Promise<{
   "full_name": string | null,
   "phone": string | null,
   "location": string | null,
+  "bio": string | null,
   "current_title": string | null,
   "experience_level": "Junior"|"Mid-Level"|"Senior"|"Lead"|"Manager"|"Director"|"Executive"|null,
   "years_experience": number | null,
   "skills": string[],
   "industries": string[],
   "work_experience": [{ "company": string, "title": string, "start_date": string, "end_date": string|null, "is_current": boolean, "responsibilities": string }],
+  "projects": [{ "name": string, "description": string, "technologies": string[], "url": string|null }],
   "education": [{ "degree": string|null, "field": string|null, "institution": string|null, "graduation_year": string|null }],
   "job_titles_seeking": string[],
   "linkedin_url": string|null,
@@ -310,7 +334,11 @@ ${extractedText.slice(0, 6000)}`,
         ? [parsed.education]
         : [];
 
-    const extracted: ExtractedProfile = { ...parsed, education };
+    const extracted: ExtractedProfile = {
+      ...parsed,
+      education,
+      projects: parsed.projects ?? [],
+    };
 
     return { success: true, data: extracted };
   } catch (error) {

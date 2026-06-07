@@ -118,11 +118,13 @@ export function ResumePDF({ profile, generated }: Props) {
           )}
         </View>
 
-        {/* Professional Summary */}
-        {generated.summary ? (
+        {/* Professional Summary / Bio */}
+        {(profile.bio || generated.summary) ? (
           <View>
             <Text style={styles.sectionTitle}>Professional Summary</Text>
-            <Text style={styles.summaryText}>{generated.summary}</Text>
+            <Text style={styles.summaryText}>
+              {profile.bio ?? generated.summary}
+            </Text>
           </View>
         ) : null}
 
@@ -131,6 +133,31 @@ export function ResumePDF({ profile, generated }: Props) {
           <View>
             <Text style={styles.sectionTitle}>Skills</Text>
             <Text style={styles.skillsText}>{profile.skills.join("  •  ")}</Text>
+          </View>
+        ) : null}
+
+        {/* Projects */}
+        {(profile.projects ?? []).some((p) => p.name || p.description) ? (
+          <View>
+            <Text style={styles.sectionTitle}>Projects</Text>
+            {(profile.projects ?? [])
+              .filter((p) => p.name || p.description)
+              .map((project, i) => (
+                <View key={i} style={i > 0 ? styles.jobEntry : undefined}>
+                  <Text style={styles.jobTitle}>{project.name}</Text>
+                  {project.description ? (
+                    <Text style={styles.summaryText}>{project.description}</Text>
+                  ) : null}
+                  {project.technologies?.length > 0 ? (
+                    <Text style={styles.skillsText}>
+                      {project.technologies.join("  •  ")}
+                    </Text>
+                  ) : null}
+                  {project.url ? (
+                    <Text style={styles.eduDetails}>{project.url}</Text>
+                  ) : null}
+                </View>
+              ))}
           </View>
         ) : null}
 

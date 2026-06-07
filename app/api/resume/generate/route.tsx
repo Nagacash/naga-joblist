@@ -50,11 +50,13 @@ export async function POST(_req: NextRequest): Promise<NextResponse> {
 
     const profileContext = JSON.stringify({
       full_name: profile.full_name,
+      bio: profile.bio,
       current_title: profile.current_title,
       experience_level: profile.experience_level,
       years_experience: profile.years_experience,
       skills: profile.skills,
       industries: profile.industries,
+      projects: profile.projects,
       work_experience: profile.work_experience,
       education: profile.education,
       job_titles_seeking: profile.job_titles_seeking,

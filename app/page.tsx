@@ -22,7 +22,7 @@ const dividerClassName =
 
 export default function HomePage() {
   return (
-    <div className="landing-shell flex min-h-full flex-col">
+    <div className="flex min-h-full flex-col">
       <a href="#main-content" className="landing-skip-link">
         Skip to content
       </a>

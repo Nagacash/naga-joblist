@@ -5,7 +5,7 @@ import { useImperativeHandle, useState, useTransition } from "react";
 import { saveProfile } from "@/actions/profile";
 import type { ExtractedProfile } from "@/actions/profile";
 import { normalizeEducation } from "@/lib/profile-utils";
-import type { Education, Profile } from "@/types";
+import type { Education, Profile, Project } from "@/types";
 
 type WorkExperienceEntry = {
   company: string;
@@ -48,6 +48,31 @@ const defaultEducationEntry = (): EducationEntry => ({
   graduation_year: "",
 });
 
+type ProjectEntry = {
+  name: string;
+  description: string;
+  technologies: string[];
+  url: string;
+};
+
+const defaultProjectEntry = (): ProjectEntry => ({
+  name: "",
+  description: "",
+  technologies: [],
+  url: "",
+});
+
+function projectEntriesFromProfile(profile: Profile | null): ProjectEntry[] {
+  const list = (profile?.projects ?? []) as Project[];
+  if (list.length === 0) return [defaultProjectEntry()];
+  return list.map((p) => ({
+    name: p.name ?? "",
+    description: p.description ?? "",
+    technologies: p.technologies ?? [],
+    url: p.url ?? "",
+  }));
+}
+
 function educationEntriesFromProfile(profile: Profile | null): EducationEntry[] {
   const list = normalizeEducation(profile?.education as Education | Education[] | null);
   if (list.length === 0) return [defaultEducationEntry()];
@@ -78,6 +103,28 @@ function FormLabel({ children }: { children: React.ReactNode }) {
     <label className="mb-1 block text-xs font-medium uppercase tracking-wide text-text-secondary">
       {children}
     </label>
+  );
+}
+
+function FormTextarea({
+  placeholder,
+  value,
+  onChange,
+  rows = 4,
+}: {
+  placeholder?: string;
+  value: string;
+  onChange: (v: string) => void;
+  rows?: number;
+}) {
+  return (
+    <textarea
+      placeholder={placeholder}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      rows={rows}
+      className="w-full resize-y rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-1 focus:ring-accent"
+    />
   );
 }
 
@@ -277,6 +324,7 @@ export function ProfileForm({ profile, formRef }: Props) {
   const [linkedinUrl, setLinkedinUrl] = useState(profile?.linkedin_url ?? "");
   const [portfolioUrl, setPortfolioUrl] = useState(profile?.portfolio_url ?? "");
   const [workAuth, setWorkAuth] = useState(profile?.work_authorization ?? "");
+  const [bio, setBio] = useState(profile?.bio ?? "");
 
   // Professional Info
   const [currentTitle, setCurrentTitle] = useState(profile?.current_title ?? "");
@@ -286,6 +334,11 @@ export function ProfileForm({ profile, formRef }: Props) {
   );
   const [skills, setSkills] = useState<string[]>(profile?.skills ?? []);
   const [industries, setIndustries] = useState<string[]>(profile?.industries ?? []);
+
+  // Projects
+  const [projectEntries, setProjectEntries] = useState<ProjectEntry[]>(
+    projectEntriesFromProfile(profile),
+  );
 
   // Work Experience
   const [workEntries, setWorkEntries] = useState<WorkExperienceEntry[]>(
@@ -320,6 +373,7 @@ export function ProfileForm({ profile, formRef }: Props) {
       if (data.full_name) setFullName(data.full_name);
       if (data.phone) setPhone(data.phone);
       if (data.location) setLocation(data.location);
+      if (data.bio) setBio(data.bio);
       if (data.linkedin_url) setLinkedinUrl(data.linkedin_url);
       if (data.portfolio_url) setPortfolioUrl(data.portfolio_url);
       if (data.current_title) setCurrentTitle(data.current_title);
@@ -328,6 +382,15 @@ export function ProfileForm({ profile, formRef }: Props) {
         setYearsExperience(String(data.years_experience));
       if (data.skills.length > 0) setSkills(data.skills);
       if (data.industries.length > 0) setIndustries(data.industries);
+      if (data.projects.length > 0)
+        setProjectEntries(
+          data.projects.map((p) => ({
+            name: p.name,
+            description: p.description,
+            technologies: p.technologies,
+            url: p.url ?? "",
+          })),
+        );
       if (data.work_experience.length > 0)
         setWorkEntries(
           data.work_experience.map((w) => ({
@@ -390,6 +453,24 @@ export function ProfileForm({ profile, formRef }: Props) {
     setEducationEntries((prev) => prev.filter((_, i) => i !== index));
   }
 
+  function updateProjectEntry<K extends keyof ProjectEntry>(
+    index: number,
+    key: K,
+    value: ProjectEntry[K],
+  ) {
+    setProjectEntries((prev) =>
+      prev.map((entry, i) => (i === index ? { ...entry, [key]: value } : entry)),
+    );
+  }
+
+  function addProjectEntry() {
+    setProjectEntries((prev) => [...prev, defaultProjectEntry()]);
+  }
+
+  function removeProjectEntry(index: number) {
+    setProjectEntries((prev) => prev.filter((_, i) => i !== index));
+  }
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSaveError(null);
@@ -400,6 +481,7 @@ export function ProfileForm({ profile, formRef }: Props) {
         fullName,
         phone,
         location,
+        bio,
         linkedinUrl,
         portfolioUrl,
         workAuth,
@@ -409,6 +491,7 @@ export function ProfileForm({ profile, formRef }: Props) {
         skills,
         industries,
         workEntries,
+        projectEntries,
         educationEntries,
         jobTitlesSeeking,
         remotePreference,
@@ -502,6 +585,22 @@ export function ProfileForm({ profile, formRef }: Props) {
 
           <div className="border-t border-border" />
 
+          {/* Bio */}
+          <div>
+            <SectionHeading>Bio</SectionHeading>
+            <p className="mb-3 text-xs text-text-secondary">
+              A short professional summary agents and recruiters see first.
+            </p>
+            <FormTextarea
+              placeholder="e.g. Senior frontend engineer with 6 years building accessible React products..."
+              value={bio}
+              onChange={setBio}
+              rows={4}
+            />
+          </div>
+
+          <div className="border-t border-border" />
+
           {/* Professional Info */}
           <div>
             <SectionHeading>Professional Info</SectionHeading>
@@ -552,6 +651,90 @@ export function ProfileForm({ profile, formRef }: Props) {
                   placeholder="e.g. FinTech, Healthcare"
                 />
               </div>
+            </div>
+          </div>
+
+          <div className="border-t border-border" />
+
+          {/* Projects */}
+          <div>
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-text-primary">Projects</h3>
+              <button
+                type="button"
+                onClick={addProjectEntry}
+                className="text-xs font-medium text-accent transition-opacity hover:opacity-75"
+              >
+                + Add project
+              </button>
+            </div>
+
+            <div className="space-y-6">
+              {projectEntries.map((entry, index) => (
+                <div
+                  key={index}
+                  className="relative rounded-xl border border-border p-4"
+                >
+                  {projectEntries.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeProjectEntry(index)}
+                      className="absolute right-3 top-3 text-xs text-text-muted hover:text-error"
+                      aria-label="Remove this project"
+                    >
+                      ✕
+                    </button>
+                  )}
+
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div className="sm:col-span-2">
+                      <FormLabel>Project Name</FormLabel>
+                      <FormInput
+                        placeholder="Job Pilot"
+                        value={entry.name}
+                        onChange={(v) => updateProjectEntry(index, "name", v)}
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <FormLabel>Description</FormLabel>
+                      <FormTextarea
+                        placeholder="What you built, the problem it solved, and your role..."
+                        value={entry.description}
+                        onChange={(v) => updateProjectEntry(index, "description", v)}
+                        rows={3}
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <FormLabel>Technologies</FormLabel>
+                      <TagInput
+                        tags={entry.technologies}
+                        onAdd={(tag) =>
+                          updateProjectEntry(index, "technologies", [
+                            ...entry.technologies,
+                            tag,
+                          ])
+                        }
+                        onRemove={(tag) =>
+                          updateProjectEntry(
+                            index,
+                            "technologies",
+                            entry.technologies.filter((t) => t !== tag),
+                          )
+                        }
+                        placeholder="e.g. Next.js, TypeScript"
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <FormLabel>Project URL (Optional)</FormLabel>
+                      <FormInput
+                        placeholder="https://github.com/yourname/project"
+                        value={entry.url}
+                        onChange={(v) => updateProjectEntry(index, "url", v)}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 

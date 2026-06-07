@@ -29,7 +29,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-GB" className={`${inter.variable} h-full antialiased`}>
+    <html
+      lang="en-GB"
+      className={`${inter.variable} theme-navy h-full antialiased`}
+    >
       <body className="flex min-h-full flex-col bg-background">
         <GlobalJsonLd />
         <RouteProgress />
